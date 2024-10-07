@@ -1,7 +1,9 @@
-export default function Home() {
+import LoginButton from "@/components/login-btn";
+
+export default async function Home() {
   return (
     <div>
-      <h1>Hello World</h1>
+      <LoginButton />
     </div>
   );
 }
