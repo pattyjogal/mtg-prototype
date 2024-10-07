@@ -1,33 +1,34 @@
 import { auth, signIn, signOut } from "@/auth";
+import Navbar from "./Navbar";
+import { Button, Flex } from "@radix-ui/themes";
 
 export default async function LoginButton() {
   const session = await auth();
   if (session?.user) {
     return (
-      <>
-        Signed in as {session.user.name} <br />
+      <Flex gap="3">
+        Welcome, {session.user.name} <br />
         <form
           action={async () => {
             "use server";
             await signOut();
           }}
         >
-          <button type="submit">Sign Out</button>
+          <Button>Sign Out</Button>
         </form>
-      </>
+      </Flex>
     );
   }
   return (
-    <>
-      Not signed in <br />
+    <div>
       <form
         action={async () => {
           "use server";
           await signIn("discord");
         }}
       >
-        <button type="submit">Sign in</button>
+        <Button>Sign in</Button>
       </form>
-    </>
+    </div>
   );
 }
