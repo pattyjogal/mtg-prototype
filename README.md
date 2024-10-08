@@ -14,6 +14,18 @@ pnpm dev
 bun dev
 ```
 
+Create a .env.local file in the root of the project and add the following environment variables:
+
+```
+DISCORD_CLIENT_ID=your-discord-client-id
+DISCORD_CLIENT_SECRET=your-discord-client-secret
+NEXTAUTH_URL=http://localhost:3000
+AUTH_SECRET=some-random-secret-val
+```
+
+
+Replace your-discord-client-id and your-discord-client-secret with your actual Discord OAuth credentials.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
