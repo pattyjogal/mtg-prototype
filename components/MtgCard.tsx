@@ -1,7 +1,7 @@
 import { SetCard } from "@/mtg-cards";
 import { manaStringToIcons } from "@/utils";
 import { Blockquote, Card, Flex, Heading, Inset, Text } from "@radix-ui/themes";
-import React from "react";
+import Image from "next/image";
 import "tailwindcss/tailwind.css";
 
 interface MtgCardProps {
@@ -17,8 +17,8 @@ const MtgCard: React.FC<MtgCardProps> = ({ card }) => {
           <div>{manaStringToIcons(card.manaCost)}</div>
         </Flex>
         <Inset>
-          <img
-            src={card.artworkUrl}
+          <Image
+            src={card.artworkUrl || "/placeholder.jpg"}
             alt={card.name}
             className="w-full max-h-[250px] object-cover"
           />

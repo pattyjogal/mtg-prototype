@@ -1,5 +1,4 @@
 import { auth, signIn, signOut } from "@/auth";
-import Navbar from "./Navbar";
 import { Button, Flex } from "@radix-ui/themes";
 
 export default async function LoginButton() {
