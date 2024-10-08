@@ -1,4 +1,3 @@
-import LoginButton from "@/components/login-btn";
 import MtgCard from "@/components/MtgCard";
 import { Container } from "@radix-ui/themes";
 
