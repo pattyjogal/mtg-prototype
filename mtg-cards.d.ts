@@ -1,6 +1,7 @@
-export type SetCard = {
+export interface IMtgCard {
   colorIndicator?: string[];
   name: string;
+  set?: string;
   manaCost: string;
   type: string;
   rarity: string;
@@ -9,4 +10,4 @@ export type SetCard = {
   power?: string;
   toughness?: string;
   artworkUrl?: string;
-};
+}

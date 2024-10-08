@@ -1,10 +1,10 @@
-import { SetCard } from "@/mtg-cards";
-import { manaStringToIcons } from "@/utils";
+import { IMtgCard } from "@/mtg-cards";
+import { manaStringToIcons } from "@/lib/utils";
 import { Blockquote, Card, Flex, Heading, Inset, Text } from "@radix-ui/themes";
 import "tailwindcss/tailwind.css";
 
 interface MtgCardProps {
-  card: SetCard;
+  card: IMtgCard;
 }
 
 const MtgCard: React.FC<MtgCardProps> = ({ card }) => {
