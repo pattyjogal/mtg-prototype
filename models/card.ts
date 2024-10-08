@@ -1,4 +1,5 @@
 import { IMtgCard } from "@/mtg-cards";
+import mongoose from "mongoose";
 import { Schema, model } from "mongoose";
 
 const cardSchema = new Schema<IMtgCard>({
@@ -14,4 +15,5 @@ const cardSchema = new Schema<IMtgCard>({
   artworkUrl: String,
 });
 
-export const MtgCardModel = model<IMtgCard>("MtgCard", cardSchema);
+export const MtgCardModel =
+  (mongoose.models.MtgCard as mongoose.Model<IMtgCard>) ?? model<IMtgCard>("MtgCard", cardSchema);
