@@ -37,17 +37,6 @@ function getColorIdentity(card: IMtgCard): string[] {
     }
   }
 
-  // Check card text for color-related keywords
-  if (card.text) {
-    for (const symbol of Object.keys(colorSymbols)) {
-      const colorName = colorSymbols[symbol];
-      const regex = new RegExp(`\\b${colorName}\\b`, "i");
-      if (regex.test(card.text)) {
-        colorIdentity.add(colorName);
-      }
-    }
-  }
-
   return Array.from(colorIdentity);
 }
 

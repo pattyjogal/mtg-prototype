@@ -1,4 +1,4 @@
-import MtgCard from "@/components/MtgCard";
+import MiniMtgCard from "@/components/MiniMtgCard";
 import dbConnect from "@/lib/dbConnect";
 import { MtgCardModel } from "@/models/card";
 import { Container, Grid } from "@radix-ui/themes";
@@ -15,7 +15,7 @@ export default async function CardsPage() {
       ) : (
         <Grid columns="5" gap="3" rows="repeat(2, 64px)" width="auto">
           {cards.map((card) => (
-            <MtgCard key={card._id.toString()} card={card} />
+            <MiniMtgCard key={card._id.toString()} card={card} />
           ))}
         </Grid>
       )}
