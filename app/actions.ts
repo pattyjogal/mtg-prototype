@@ -1,11 +1,10 @@
 "use server";
-// https://www.robinwieruch.de/next-forms/
-import { MtgCardModel } from "@/models/card";
-import { IMtgCard } from "@/mtg-cards";
+import prisma from "@/lib/dbConnect";
+import { DisplayableMtgCard } from "@/mtg-cards";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
-type FormState = IMtgCard;
+type FormState = DisplayableMtgCard;
 
 const createCardSchema = zfd.formData({
   name: zfd.text(),
@@ -18,6 +17,6 @@ const createCardSchema = zfd.formData({
 
 export async function createCard(formState: FormState, formData: FormData) {
   const data = createCardSchema.parse(formData);
-  const card = await MtgCardModel.create(data);
+  const card = await prisma.mtgCard.create({ data });
   return JSON.parse(JSON.stringify(card)) as FormState;
 }

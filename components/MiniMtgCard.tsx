@@ -1,18 +1,17 @@
-import { IMtgCard } from "@/mtg-cards";
+import { DisplayableMtgCard } from "@/mtg-cards";
 import { getTailwindColorClass, manaStringToIcons } from "@/lib/utils";
 import { Card, Flex, Heading, Inset } from "@radix-ui/themes";
 import "tailwindcss/tailwind.css";
 import Link from "next/link";
-import type { Types } from "mongoose";
 
 interface MiniMtgCardProps {
-  card: IMtgCard & { _id: Types.ObjectId };
+  card: DisplayableMtgCard & { id: string };
 }
 
 const MtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
   return (
     <Card asChild className={`${getTailwindColorClass(card)} w-[187px] h-[263px]`}>
-      <Link href={`/cards/${card._id}`}>
+      <Link href={`/cards/${card.id}`}>
         <Flex gap="5" direction="column">
           <Flex justify="between" wrap="nowrap">
             <Heading size="2" truncate>

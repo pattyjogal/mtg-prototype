@@ -1,20 +1,17 @@
-import MtgCard from "@/components/MtgCard";
-import dbConnect from "@/lib/dbConnect";
-import { MtgCardModel } from "@/models/card";
+import MtgCardPreview from "@/components/MtgCardPreview";
+import prisma from "@/lib/dbConnect";
 import { Container } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 
 const CardPage = async ({ params }: { params: { card_id: string } }) => {
-  await dbConnect();
-
-  const card = await MtgCardModel.findById(params.card_id).lean();
+  const card = await prisma.mtgCard.findFirst({ where: { id: params.card_id } });
   if (!card) {
     notFound();
   }
 
   return (
     <Container>
-      <MtgCard card={card} />
+      <MtgCardPreview card={card} />
     </Container>
   );
 };

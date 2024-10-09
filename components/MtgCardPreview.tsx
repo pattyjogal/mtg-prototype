@@ -1,13 +1,13 @@
-import { IMtgCard } from "@/mtg-cards";
 import { getTailwindColorClass, manaStringToIcons } from "@/lib/utils";
 import { Blockquote, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import "tailwindcss/tailwind.css";
+import { DisplayableMtgCard } from "@/mtg-cards";
 
 interface MtgCardProps {
-  card: IMtgCard;
+  card: DisplayableMtgCard;
 }
 
-const MtgCard: React.FC<MtgCardProps> = ({ card }) => {
+const MtgCardPreview: React.FC<MtgCardProps> = ({ card }) => {
   return (
     <Card className={`${getTailwindColorClass(card)} w-[375px] h-[525px]`}>
       <Flex gap="5" direction="column" className="h-full">
@@ -44,4 +44,4 @@ const MtgCard: React.FC<MtgCardProps> = ({ card }) => {
   );
 };
 
-export default MtgCard;
+export default MtgCardPreview;

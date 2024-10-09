@@ -6,7 +6,7 @@ import { Button, Container, Flex, Heading, Select, TextArea, TextField } from "@
 import { ReactNode, useState } from "react";
 import { useFormStatus, useFormState } from "react-dom";
 import { debounce } from "lodash";
-import MtgCard from "@/components/MtgCard";
+import MtgCardPreview from "@/components/MtgCardPreview";
 
 interface SubmitButtonProps {
   label: ReactNode;
@@ -120,7 +120,7 @@ export default function CardEditPage() {
       <Heading mb="8">Create a Card</Heading>
       <Flex justify="between">
         <CardEditForm onInputChange={handleCardChange} />
-        <MtgCard card={card} />
+        <MtgCardPreview card={card} />
       </Flex>
     </Container>
   );

@@ -1,5 +1,5 @@
+import { DisplayableMtgCard } from "@/mtg-cards";
 import type { ReactNode } from "react";
-import { IMtgCard } from "../mtg-cards";
 
 export function manaStringToIcons(manaString: string): ReactNode[] {
   const manaSymbols = manaString.match(/{(.*?)}/g) || [];
@@ -16,7 +16,7 @@ const colorSymbols: { [key: string]: string } = {
   G: "Green",
 };
 
-function getColorIdentity(card: IMtgCard): string[] {
+function getColorIdentity(card: DisplayableMtgCard): string[] {
   const colorIdentity = new Set<string>();
 
   // Check mana cost for color symbols
@@ -40,7 +40,7 @@ function getColorIdentity(card: IMtgCard): string[] {
   return Array.from(colorIdentity);
 }
 
-export function getTailwindColorClass(card: IMtgCard): string {
+export function getTailwindColorClass(card: DisplayableMtgCard): string {
   const colorIdentity = getColorIdentity(card);
 
   if (colorIdentity.length === 0) {
