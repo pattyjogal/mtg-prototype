@@ -12,9 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret:
         process.env.DISCORD_CLIENT_SECRET ||
         (() => {
-          throw new Error(
-            "DISCORD_CLIENT_SECRET environment variable is not set"
-          );
+          throw new Error("DISCORD_CLIENT_SECRET environment variable is not set");
         })(),
     }),
   ],

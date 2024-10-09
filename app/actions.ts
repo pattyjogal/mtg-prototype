@@ -1,4 +1,6 @@
 "use server";
+
+import { signIn, signOut } from "@/auth";
 import prisma from "@/lib/dbConnect";
 import { DisplayableMtgCard } from "@/mtg-cards";
 import { z } from "zod";
@@ -14,6 +16,9 @@ const createCardSchema = zfd.formData({
   rarity: zfd.text(),
   text: zfd.text(),
 });
+
+export const login = () => signIn("discord");
+export const logout = () => signOut();
 
 export async function createCard(formState: FormState, formData: FormData) {
   const data = createCardSchema.parse(formData);
