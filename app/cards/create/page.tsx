@@ -26,7 +26,7 @@ interface CardEditFormProps {
   onInputChange(name: string, value: string): void;
 }
 
-export function CardEditForm({ onInputChange }: CardEditFormProps) {
+function CardEditForm({ onInputChange }: CardEditFormProps) {
   const [, action] = useFormState(createCard, {
     name: "",
     manaCost: "",

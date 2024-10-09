@@ -18,7 +18,6 @@ const createCardSchema = zfd.formData({
 
 export async function createCard(formState: FormState, formData: FormData) {
   const data = createCardSchema.parse(formData);
-  console.log(data);
   const card = await MtgCardModel.create(data);
   return JSON.parse(JSON.stringify(card)) as FormState;
 }
