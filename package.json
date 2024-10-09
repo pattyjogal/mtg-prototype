@@ -12,15 +12,21 @@
   },
   "dependencies": {
     "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/react-form": "^0.1.0",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/themes": "^3.1.4",
+    "lodash": "^4.17.21",
     "mana-font": "^1.15.9",
     "mongoose": "^8.7.0",
     "next": "14.2.14",
     "next-auth": "^5.0.0-beta.22",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.23.8",
+    "zod-form-data": "^2.0.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

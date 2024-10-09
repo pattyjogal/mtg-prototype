@@ -10,7 +10,7 @@ interface MtgCardProps {
 const MtgCard: React.FC<MtgCardProps> = ({ card }) => {
   return (
     <Card className={`${getTailwindColorClass(card)} w-[375px] h-[525px]`}>
-      <Flex gap="3" direction="column">
+      <Flex gap="5" direction="column">
         <Flex justify="between">
           <Heading>{card.name}</Heading>
           <div>{manaStringToIcons(card.manaCost)}</div>
