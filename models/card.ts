@@ -13,6 +13,7 @@ const cardSchema = new Schema<IMtgCard>({
   power: String,
   toughness: String,
   artworkUrl: String,
+  setSymbolUrl: String,
 });
 
 export const MtgCardModel =
