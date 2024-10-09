@@ -10,4 +10,5 @@ export interface IMtgCard {
   power?: string;
   toughness?: string;
   artworkUrl?: string;
+  setSymbolUrl?: string;
 }
