@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Prerequisite - install dependencies if you have not already:
+
+```bash
+npm install
+```
+
 First, run the development server:
 
 ```bash
@@ -22,7 +28,6 @@ DISCORD_CLIENT_SECRET=your-discord-client-secret
 NEXTAUTH_URL=http://localhost:3000
 AUTH_SECRET=some-random-secret-val
 ```
-
 
 Replace your-discord-client-id and your-discord-client-secret with your actual Discord OAuth credentials.
 
