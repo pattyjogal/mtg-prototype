@@ -8,7 +8,7 @@ interface MiniMtgCardProps {
   card: DisplayableMtgCard & { id: string };
 }
 
-const MtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
+const MiniMtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
   return (
     <Card asChild className={`${getTailwindColorClass(card)} w-[187px] h-[263px]`}>
       <Link href={`/cards/${card.id}`}>
@@ -35,4 +35,4 @@ const MtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
   );
 };
 
-export default MtgCard;
+export default MiniMtgCard;

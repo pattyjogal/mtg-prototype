@@ -30,7 +30,7 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
   const [, action] = useFormState(createCard, {
     name: "",
     manaCost: "",
-    artworkUrl: "",
+    artwork: null,
     type: "",
     rarity: "common",
     text: "",
@@ -58,10 +58,27 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
           <TextField.Root type="text" name="manaCost" required onChange={handleChange} />
         </Form.Control>
       </Form.Field>
-      <Form.Field className="grid mb-3" name="artworkUrl">
-        <Form.Label htmlFor="artworkUrl">Artwork URL</Form.Label>
+      <Form.Field className="grid mb-3" name="artwork">
+        <Form.Label htmlFor="artwork">Artwork Image</Form.Label>
         <Form.Control asChild>
-          <TextField.Root type="text" name="artworkUrl" required onChange={handleChange} />
+          <input
+            type="file"
+            name="artwork"
+            accept="image/*"
+            required
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                  debouncedInputChange("artworkUrl", reader.result as string);
+                };
+                reader.readAsDataURL(file);
+              } else {
+                debouncedInputChange("artworkUrl", "");
+              }
+            }}
+          />
         </Form.Control>
       </Form.Field>
       <Form.Field className="grid mb-3" name="type">
@@ -107,6 +124,7 @@ export default function CardEditPage() {
     name: "",
     manaCost: "",
     type: "",
+    artworkUrl: "",
     rarity: "common",
     text: "",
   });
