@@ -1,11 +1,15 @@
 import MiniMtgCard from "@/components/MiniMtgCard";
 import prisma from "@/lib/dbConnect";
-import { Container, Grid } from "@radix-ui/themes";
+import { Button, Container, Grid } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default async function CardsPage() {
   const cards = await prisma.mtgCard.findMany();
   return (
     <Container>
+      <Button asChild className="mb-6">
+        <Link href="/cards/create">Create</Link>
+      </Button>
       {cards.length === 0 ? (
         <h1>No cards found</h1>
       ) : (
