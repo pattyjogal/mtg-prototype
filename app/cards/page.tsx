@@ -1,5 +1,6 @@
 import MiniMtgCard from "@/components/MiniMtgCard";
 import prisma from "@/lib/dbConnect";
+import { createDisplayCard } from "@/lib/utils";
 import { Button, Container, Grid } from "@radix-ui/themes";
 import Link from "next/link";
 
@@ -15,7 +16,7 @@ export default async function CardsPage() {
       ) : (
         <Grid columns="5" gap="3" rows="repeat(2, 64px)" width="auto">
           {cards.map((card) => (
-            <MiniMtgCard key={card.id} card={card} />
+            <MiniMtgCard key={card.id} card={{ ...createDisplayCard(card), id: card.id }} />
           ))}
         </Grid>
       )}

@@ -12,10 +12,10 @@ datasource db {
 }
 
 model MtgCard {
-  id             String   @id @default(cuid())
+  id             String     @id @default(cuid())
   name           String
   manaCost       String
-  type           String
+  type           CardType[]
   rarity         String
   text           String
   flavor         String?
@@ -24,6 +24,17 @@ model MtgCard {
   artworkUrl     String?
   setSymbolUrl   String?
   colorIndicator String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+enum CardType {
+  CREATURE
+  ARTIFACT
+  ENCHANTMENT
+  INSTANT
+  SORCERY
+  PLANESWALKER
+  LAND
+  OTHER
 }

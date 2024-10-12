@@ -1,5 +1,7 @@
 import { DisplayableMtgCard } from "@/mtg-cards";
+import { MtgCard } from "@prisma/client";
 import type { ReactNode } from "react";
+import { CardTypeDisplay, CardTypeOrder } from "./constants";
 
 export function manaStringToIcons(manaString: string): ReactNode[] {
   const manaSymbols = manaString.match(/{(.*?)}/g) || [];
@@ -64,4 +66,13 @@ export function getTailwindColorClass(card: DisplayableMtgCard): string {
         return "bg-gray-500"; // Fallback to colorless
     }
   }
+}
+
+export function createDisplayCard(card: MtgCard): DisplayableMtgCard {
+  return {
+    ...card,
+    type: CardTypeOrder.filter((x) => card.type.includes(x))
+      .map((type) => CardTypeDisplay[type])
+      .join(" "),
+  };
 }

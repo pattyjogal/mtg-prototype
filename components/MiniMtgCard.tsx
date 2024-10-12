@@ -3,6 +3,7 @@ import { getTailwindColorClass, manaStringToIcons } from "@/lib/utils";
 import { Card, Flex, Heading, Inset } from "@radix-ui/themes";
 import "tailwindcss/tailwind.css";
 import Link from "next/link";
+import Image from "next/image";
 
 interface MiniMtgCardProps {
   card: DisplayableMtgCard & { id: string };
@@ -20,10 +21,12 @@ const MiniMtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
             <Flex gap="1">{manaStringToIcons(card.manaCost)}</Flex>
           </Flex>
           <Inset>
-            <img
+            <Image
+              width={187}
+              height={146}
               src={card.artworkUrl || "/placeholder.jpg"}
               alt={card.name}
-              className="w-full max-h-[187px] object-cover"
+              className="w-full max-h-[146px] object-cover"
             />
           </Inset>
           <Heading size="4" weight="regular">

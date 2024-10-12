@@ -2,13 +2,13 @@
 
 import { signIn, signOut } from "@/auth";
 import prisma from "@/lib/dbConnect";
-import { DisplayableMtgCard } from "@/mtg-cards";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 import { put } from "@vercel/blob";
 import cuid2 from "@paralleldrive/cuid2";
+import { CardType, Prisma } from "@prisma/client";
 
-type FormState = { artwork: File | null } & DisplayableMtgCard;
+type FormState = Prisma.MtgCardCreateInput;
 
 export const login = () => signIn("discord");
 export const logout = () => signOut();
@@ -17,7 +17,7 @@ const createCardSchema = zfd.formData({
   name: zfd.text(),
   manaCost: zfd.text(),
   artwork: zfd.file(z.instanceof(File).optional()),
-  type: zfd.text(),
+  type: zfd.repeatableOfType(zfd.text(z.nativeEnum(CardType))),
   rarity: zfd.text(),
   text: zfd.text(),
 });
@@ -25,7 +25,7 @@ const createCardSchema = zfd.formData({
 export async function createCard(formState: FormState, formData: FormData) {
   const { artwork, ...parsed } = createCardSchema.parse(formData);
 
-  let data: DisplayableMtgCard = parsed;
+  let data: FormState = parsed;
   if (artwork) {
     const mimeToExtension: { [key: string]: string } = {
       "image/jpeg": "jpg",
