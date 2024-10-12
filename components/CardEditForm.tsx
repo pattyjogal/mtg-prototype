@@ -1,11 +1,12 @@
 import { createCard } from "@/app/actions";
 import * as Form from "@radix-ui/react-form";
-import { Select, TextArea, TextField } from "@radix-ui/themes";
+import { Flex, Select, TextArea, TextField } from "@radix-ui/themes";
 import { debounce } from "lodash";
 import { useFormState } from "react-dom";
 import SubmitButton from "./SubmitButton";
 import CardTypeMultiselect from "./CardTypeMultiselect";
 import { useState } from "react";
+import { CardType } from "@prisma/client";
 
 interface CardEditFormProps {
   onInputChange(name: string, value: string): void;
@@ -15,10 +16,9 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
   const [, action] = useFormState(createCard, {
     name: "",
     manaCost: "",
-    artwork: null,
-    type: "",
     rarity: "common",
     text: "",
+    type: [],
   });
 
   const [typeValues, setTypeValues] = useState<string[]>([]);
@@ -99,6 +99,28 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
           <TextArea name="text" required onChange={handleChange}></TextArea>
         </Form.Control>
       </Form.Field>
+      <Form.Field className="grid mb-3" name="flavor">
+        <Form.Label htmlFor="flavor">Flavor</Form.Label>
+        <Form.Control asChild>
+          <TextArea name="flavor" onChange={handleChange}></TextArea>
+        </Form.Control>
+      </Form.Field>
+      {typeValues.includes(CardType.CREATURE) && (
+        <Flex className="mb-3">
+          <Form.Field name="power">
+            <Form.Label htmlFor="power">Power</Form.Label>
+            <Form.Control asChild>
+              <TextField.Root type="number" name="power" required onChange={handleChange} />
+            </Form.Control>
+          </Form.Field>
+          <Form.Field name="toughness">
+            <Form.Label htmlFor="toughness">Toughness</Form.Label>
+            <Form.Control asChild>
+              <TextField.Root type="number" name="toughness" required onChange={handleChange} />
+            </Form.Control>
+          </Form.Field>
+        </Flex>
+      )}
       <Form.Submit asChild>
         <SubmitButton label="Create Card" loading="Creating Card..." />
       </Form.Submit>

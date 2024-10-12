@@ -3,11 +3,22 @@ import { MtgCard } from "@prisma/client";
 import type { ReactNode } from "react";
 import { CardTypeDisplay, CardTypeOrder } from "./constants";
 
+export function CostSymbol({ cost }: { cost: string }) {
+  return <i className={`ms ms-cost ms-${cost.replace(/[{}]/g, "").toLowerCase()}`} />;
+}
+
 export function manaStringToIcons(manaString: string): ReactNode[] {
   const manaSymbols = manaString.match(/{(.*?)}/g) || [];
-  return manaSymbols.map((symbol) => (
-    <i key={symbol} className={`ms ms-cost ms-${symbol.replace(/[{}]/g, "").toLowerCase()}`} />
-  ));
+  return manaSymbols.map((symbol) => <CostSymbol key={symbol} cost={symbol} />);
+}
+
+export function renderCostSymbols(text: string): ReactNode[] {
+  return text.split(/({.*?})/g).map((part, index) => {
+    if (part.match(/{.*?}/)) {
+      return <CostSymbol key={index} cost={part} />;
+    }
+    return part;
+  });
 }
 
 const colorSymbols: { [key: string]: string } = {

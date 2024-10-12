@@ -8,7 +8,7 @@ import { put } from "@vercel/blob";
 import cuid2 from "@paralleldrive/cuid2";
 import { CardType, Prisma } from "@prisma/client";
 
-type FormState = Prisma.MtgCardCreateInput;
+type FormState = Omit<Prisma.MtgCardCreateInput, "type" | "artworkUrl"> & { artwork?: File; type: CardType[] };
 
 export const login = () => signIn("discord");
 export const logout = () => signOut();
@@ -20,12 +20,15 @@ const createCardSchema = zfd.formData({
   type: zfd.repeatableOfType(zfd.text(z.nativeEnum(CardType))),
   rarity: zfd.text(),
   text: zfd.text(),
+  flavor: zfd.text().optional(),
+  power: zfd.text().optional(),
+  toughness: zfd.text().optional(),
 });
 
 export async function createCard(formState: FormState, formData: FormData) {
   const { artwork, ...parsed } = createCardSchema.parse(formData);
 
-  let data: FormState = parsed;
+  let data: Prisma.MtgCardCreateInput = parsed;
   if (artwork) {
     const mimeToExtension: { [key: string]: string } = {
       "image/jpeg": "jpg",
