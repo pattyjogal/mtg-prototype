@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import MiniMtgCard from "@/components/MiniMtgCard";
 import prisma from "@/lib/dbConnect";
 import { createDisplayCard } from "@/lib/utils";
@@ -6,11 +7,14 @@ import Link from "next/link";
 
 export default async function CardsPage() {
   const cards = await prisma.mtgCard.findMany();
+  const session = await auth();
   return (
     <Container>
-      <Button asChild className="mb-6">
-        <Link href="/cards/create">Create</Link>
-      </Button>
+      {session?.user && (
+        <Button asChild className="mb-6">
+          <Link href="/cards/create">Create</Link>
+        </Button>
+      )}
       {cards.length === 0 ? (
         <h1>No cards found</h1>
       ) : (

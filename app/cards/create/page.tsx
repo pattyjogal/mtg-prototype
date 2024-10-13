@@ -1,31 +1,18 @@
-"use client";
+import { Container, Heading } from "@radix-ui/themes";
+import { auth } from "@/auth";
+import SideFormCardView from "@/components/SideFormCardView";
+import { redirect } from "next/navigation";
 
-import { Container, Flex, Heading } from "@radix-ui/themes";
-import { useState } from "react";
-import MtgCardPreview from "@/components/MtgCardPreview";
-import CardEditForm from "@/components/CardEditForm";
-
-export default function CardEditPage() {
-  const [card, setCard] = useState({
-    name: "",
-    manaCost: "",
-    type: "",
-    artworkUrl: "",
-    rarity: "common",
-    text: "",
-  });
-
-  function handleCardChange(name: string, value: string) {
-    setCard((prev) => ({ ...prev, [name]: value }));
+export default async function CardEditPage() {
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/cards");
   }
 
   return (
     <Container>
       <Heading mb="8">Create a Card</Heading>
-      <Flex justify="between">
-        <CardEditForm onInputChange={handleCardChange} />
-        <MtgCardPreview card={card} />
-      </Flex>
+      <SideFormCardView />
     </Container>
   );
 }
