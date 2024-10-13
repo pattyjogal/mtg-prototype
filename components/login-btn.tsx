@@ -1,13 +1,14 @@
 "use client";
 
-import { Button, Flex } from "@radix-ui/themes";
+import { Avatar, Button, Flex } from "@radix-ui/themes";
+import { User } from "next-auth";
 import { signIn, signOut } from "next-auth/react";
 
-export default function LoginButton({ username }: { username?: string | null }) {
-  if (username) {
+export default function LoginButton({ user }: { user?: User }) {
+  if (user?.name) {
     return (
-      <Flex gap="3">
-        Welcome, {username} <br />
+      <Flex gap="3" align="center">
+        <Avatar src={user.image || undefined} fallback={user.name[0]} /> {user?.name} <br />
         <Button onClick={() => signOut()}>Sign Out</Button>
       </Flex>
     );

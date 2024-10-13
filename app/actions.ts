@@ -1,12 +1,13 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import prisma from "@/lib/dbConnect";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 import { put } from "@vercel/blob";
 import cuid2 from "@paralleldrive/cuid2";
 import { CardType, Prisma } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 type FormState = Omit<Prisma.MtgCardCreateInput, "type" | "artworkUrl"> & { artwork?: File; type: CardType[] };
 
@@ -26,9 +27,14 @@ const createCardSchema = zfd.formData({
 });
 
 export async function createCard(formState: FormState, formData: FormData) {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+
   const { artwork, ...parsed } = createCardSchema.parse(formData);
 
-  let data: Prisma.MtgCardCreateInput = parsed;
+  let data: Prisma.MtgCardCreateInput = { ...parsed, user: session.user.name || "unknown" };
   if (artwork) {
     const mimeToExtension: { [key: string]: string } = {
       "image/jpeg": "jpg",
@@ -41,5 +47,6 @@ export async function createCard(formState: FormState, formData: FormData) {
   }
 
   const card = await prisma.mtgCard.create({ data });
+  redirect(`/cards/${card.id}`);
   return JSON.parse(JSON.stringify(card)) as FormState;
 }

@@ -24,6 +24,7 @@ model MtgCard {
   artworkUrl     String?
   setSymbolUrl   String?
   colorIndicator String?
+  user           String     @default("admin")
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 }

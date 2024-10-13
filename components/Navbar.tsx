@@ -15,7 +15,7 @@ export default async function Navbar() {
             The Brewery
           </Link>
           <NavigationTabs />
-          <LoginButton username={session?.user?.name} />
+          <LoginButton user={session?.user} />
         </Flex>
       </Container>
     </nav>
