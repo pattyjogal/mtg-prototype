@@ -1,21 +1,26 @@
+import { auth } from "@/auth";
 import MiniMtgCard from "@/components/MiniMtgCard";
-import dbConnect from "@/lib/dbConnect";
-import { MtgCardModel } from "@/models/card";
-import { Container, Grid } from "@radix-ui/themes";
+import prisma from "@/lib/dbConnect";
+import { createDisplayCard } from "@/lib/utils";
+import { Button, Container, Grid } from "@radix-ui/themes";
+import Link from "next/link";
 
 export default async function CardsPage() {
-  await dbConnect();
-
-  const cards = await MtgCardModel.find({}).lean();
-
+  const cards = await prisma.mtgCard.findMany();
+  const session = await auth();
   return (
     <Container>
+      {session?.user && (
+        <Button asChild className="mb-6">
+          <Link href="/cards/create">Create</Link>
+        </Button>
+      )}
       {cards.length === 0 ? (
         <h1>No cards found</h1>
       ) : (
         <Grid columns="5" gap="3" rows="repeat(2, 64px)" width="auto">
           {cards.map((card) => (
-            <MiniMtgCard key={card._id.toString()} card={card} />
+            <MiniMtgCard key={card.id} card={{ ...createDisplayCard(card), id: card.id }} />
           ))}
         </Grid>
       )}

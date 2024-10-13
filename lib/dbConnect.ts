@@ -1,44 +1,26 @@
-import mongoose from "mongoose";
+import { PrismaClient } from "@prisma/client";
 
-declare global {
-  // eslint-disable-next-line
-  var mongoose: any;
-}
+const fixedUrl = process.env.POSTGRES_PRISMA_URL?.includes("pgbouncer=true")
+  ? process.env.POSTGRES_PRISMA_URL
+  : process.env.POSTGRES_PRISMA_URL + "&pgbouncer=true";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/mtg-prototype";
+const prismaClientSingleton = () => {
+  return new PrismaClient({
+    log: ["error"],
+    datasources: {
+      db: {
+        url: fixedUrl,
+      },
+    },
+  });
+};
 
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
-}
+declare const globalThis: {
+  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
+} & typeof global;
 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This prevents connections growing exponentially
- * during API Route usage.
- */
-let cached = global.mongoose;
+const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
 
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
-}
+export default prisma;
 
-async function dbConnect() {
-  if (cached.conn) {
-    return cached.conn;
-  }
-
-  if (!cached.promise) {
-    const opts = {
-      useUnifiedTopology: true,
-      bufferCommands: false,
-    };
-
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
-      return mongoose;
-    });
-  }
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
-
-export default dbConnect;
+if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;

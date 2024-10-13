@@ -1,16 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // experimental: {
-    //     esmExternals: "loose", // <-- add this
-    //     serverComponentsExternalPackages: ["mongoose"] // <-- and this
-    // },
-    // // and the following to enable top-level await support for Webpack
-    // webpack: (config) => {
-    //     config.experiments = {
-    //         topLevelAwait: true
-    //     };
-    //     return config;
-    // },
+    images: {
+        remotePatterns: [
+
+            {
+                protocol: "https",
+                hostname: "iy7qcmpt01rkuswr.public.blob.vercel-storage.com",
+                port: "",
+                pathname: "/card_art/**",
+            },
+
+        ]
+    }
 };
 
 export default nextConfig;

@@ -1,14 +1,13 @@
-export interface IMtgCard {
-  colorIndicator?: string[];
+export interface DisplayableMtgCard {
   name: string;
-  set?: string;
   manaCost: string;
   type: string;
-  rarity: string;
   text: string;
-  flavor?: string;
-  power?: string;
-  toughness?: string;
-  artworkUrl?: string;
-  setSymbolUrl?: string;
+  rarity: string;
+  colorIndicator?: string | null;
+  flavor?: string | null;
+  power?: string | null;
+  toughness?: string | null;
+  artworkUrl?: string | null;
+  setSymbolUrl?: string | null;
 }

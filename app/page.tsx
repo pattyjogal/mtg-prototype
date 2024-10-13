@@ -1,10 +1,10 @@
-import MtgCard from "@/components/MtgCard";
+import MtgCardPreview from "@/components/MtgCardPreview";
 import { Container } from "@radix-ui/themes";
 
 export default async function Dashboard() {
   return (
     <Container>
-      <MtgCard
+      <MtgCardPreview
         card={{
           name: "Expensive Lightning Bolt",
           manaCost: "{5}{R}",
@@ -16,7 +16,7 @@ export default async function Dashboard() {
           setSymbolUrl: "https://i.imgur.com/AaDn6sc.png",
         }}
       />
-      <MtgCard
+      <MtgCardPreview
         card={{
           name: "Colossal Dreadmaw",
           manaCost: "{4}{G}{G}",
@@ -31,7 +31,7 @@ export default async function Dashboard() {
           toughness: "6",
         }}
       />
-      <MtgCard
+      <MtgCardPreview
         card={{
           name: "Vanilla Dreadmaw",
           manaCost: "{4}{G}{G}",

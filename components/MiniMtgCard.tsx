@@ -1,18 +1,18 @@
-import { IMtgCard } from "@/mtg-cards";
+import { DisplayableMtgCard } from "@/mtg-cards";
 import { getTailwindColorClass, manaStringToIcons } from "@/lib/utils";
 import { Card, Flex, Heading, Inset } from "@radix-ui/themes";
 import "tailwindcss/tailwind.css";
 import Link from "next/link";
-import type { Types } from "mongoose";
+import Image from "next/image";
 
 interface MiniMtgCardProps {
-  card: IMtgCard & { _id: Types.ObjectId };
+  card: DisplayableMtgCard & { id: string };
 }
 
-const MtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
+const MiniMtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
   return (
     <Card asChild className={`${getTailwindColorClass(card)} w-[187px] h-[263px]`}>
-      <Link href={`/cards/${card._id}`}>
+      <Link href={`/cards/${card.id}`}>
         <Flex gap="5" direction="column">
           <Flex justify="between" wrap="nowrap">
             <Heading size="2" truncate>
@@ -21,10 +21,12 @@ const MtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
             <Flex gap="1">{manaStringToIcons(card.manaCost)}</Flex>
           </Flex>
           <Inset>
-            <img
+            <Image
+              width={187}
+              height={146}
               src={card.artworkUrl || "/placeholder.jpg"}
               alt={card.name}
-              className="w-full max-h-[187px] object-cover"
+              className="w-full max-h-[146px] object-cover"
             />
           </Inset>
           <Heading size="4" weight="regular">
@@ -36,4 +38,4 @@ const MtgCard: React.FC<MiniMtgCardProps> = ({ card }) => {
   );
 };
 
-export default MtgCard;
+export default MiniMtgCard;
