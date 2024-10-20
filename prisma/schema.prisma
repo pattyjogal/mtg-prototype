@@ -16,6 +16,8 @@ model MtgCard {
   name           String
   manaCost       String
   type           CardType[]
+  supertype      String?
+  subtype        String?
   rarity         String
   text           String
   flavor         String?

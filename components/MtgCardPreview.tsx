@@ -32,10 +32,10 @@ const MtgCardPreview: React.FC<MtgCardProps> = ({ card }) => {
         )}
         <Flex direction="column" className="h-full">
           <Flex direction="row" className="max-h-5 w-full justify-between mb-3">
-            <Heading className={hedvig.className} size="5">
-              {card.type}
+            <Heading className={hedvig.className} size="4">
+              {card.supertype ? card.supertype : ""} {card.type} {card.subtype ? ` - ${card.subtype}` : ""}
             </Heading>
-            <img src={card.setSymbolUrl || "/placeholder.jpg"} alt={card.name} className="object-cover" />
+            <img src={card.setSymbolUrl || "/placeholder.jpg"} alt="S" className="object-cover" />
           </Flex>
           {card.text && <Text>{renderCostSymbols(card.text)}</Text>}
           <div className="wrapper mt-auto">
