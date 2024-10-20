@@ -1,29 +1,19 @@
-import { createCard } from "@/app/actions";
+import { FormState } from "@/app/actions";
 import * as Form from "@radix-ui/react-form";
 import { Flex, Select, TextArea, TextField } from "@radix-ui/themes";
 import { debounce } from "lodash";
-import { useFormState } from "react-dom";
 import SubmitButton from "./SubmitButton";
 import CardTypeMultiselect from "./CardTypeMultiselect";
-import { useState } from "react";
 import { CardType } from "@prisma/client";
 
 interface CardEditFormProps {
-  onInputChange(name: string, value: string): void;
+  onInputChange(name: string, value: string | string[]): void;
+  card: FormState;
+  action: (payload: FormData) => void;
 }
 
-function CardEditForm({ onInputChange }: CardEditFormProps) {
-  const [, action] = useFormState(createCard, {
-    name: "",
-    manaCost: "",
-    rarity: "common",
-    text: "",
-    type: [],
-  });
-
-  const [typeValues, setTypeValues] = useState<string[]>([]);
-
-  const debouncedInputChange = debounce((name: string, value: string) => {
+function CardEditForm({ onInputChange, card, action }: CardEditFormProps) {
+  const debouncedInputChange = debounce((name: string, value: string | string[]) => {
     onInputChange(name, value);
   }, 1000);
 
@@ -36,13 +26,13 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
       <Form.Field className="grid mb-3" name="name">
         <Form.Label htmlFor="name">Name</Form.Label>
         <Form.Control asChild>
-          <TextField.Root type="text" name="name" required onChange={handleChange} />
+          <TextField.Root type="text" name="name" defaultValue={card.name} required onChange={handleChange} />
         </Form.Control>
       </Form.Field>
       <Form.Field className="grid mb-3" name="manaCost">
         <Form.Label htmlFor="manaCost">Mana Cost</Form.Label>
         <Form.Control asChild>
-          <TextField.Root type="text" name="manaCost" required onChange={handleChange} />
+          <TextField.Root type="text" name="manaCost" defaultValue={card.manaCost} required onChange={handleChange} />
         </Form.Control>
       </Form.Field>
       <Form.Field className="grid mb-3" name="artwork">
@@ -68,10 +58,28 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
           />
         </Form.Control>
       </Form.Field>
+      <Form.Field className="grid mb-3" name="supertype">
+        <Form.Label htmlFor="supertype">Supertype</Form.Label>
+        <Form.Control asChild>
+          <TextField.Root type="text" name="supertype" defaultValue={card.supertype || ""} onChange={handleChange} />
+        </Form.Control>
+      </Form.Field>
       <Form.Field className="grid mb-3" name="type">
         <Form.Label htmlFor="type">Type</Form.Label>
         <Form.Control asChild>
-          <CardTypeMultiselect name="type" value={typeValues} onChange={setTypeValues} />
+          <CardTypeMultiselect
+            name="type"
+            value={card.type}
+            onChange={(vals) => {
+              onInputChange("type", vals);
+            }}
+          />
+        </Form.Control>
+      </Form.Field>
+      <Form.Field className="grid mb-3" name="subtype">
+        <Form.Label htmlFor="subtype">Subtype</Form.Label>
+        <Form.Control asChild>
+          <TextField.Root type="text" name="subtype" defaultValue={card.subtype || ""} onChange={handleChange} />
         </Form.Control>
       </Form.Field>
       <Form.Field className="grid mb-3" name="rarity">
@@ -81,6 +89,7 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
             defaultValue="common"
             name="rarity"
             required
+            value={card.rarity}
             onValueChange={(value) => debouncedInputChange("rarity", value)}
           >
             <Select.Trigger />
@@ -96,27 +105,39 @@ function CardEditForm({ onInputChange }: CardEditFormProps) {
       <Form.Field className="grid mb-3" name="text">
         <Form.Label htmlFor="text">Text</Form.Label>
         <Form.Control asChild>
-          <TextArea name="text" required onChange={handleChange}></TextArea>
+          <TextArea name="text" required defaultValue={card.text} onChange={handleChange}></TextArea>
         </Form.Control>
       </Form.Field>
       <Form.Field className="grid mb-3" name="flavor">
         <Form.Label htmlFor="flavor">Flavor</Form.Label>
         <Form.Control asChild>
-          <TextArea name="flavor" onChange={handleChange}></TextArea>
+          <TextArea name="flavor" defaultValue={card.flavor || ""} onChange={handleChange}></TextArea>
         </Form.Control>
       </Form.Field>
-      {typeValues.includes(CardType.CREATURE) && (
+      {card.type.includes(CardType.CREATURE) && (
         <Flex className="mb-3">
           <Form.Field name="power">
             <Form.Label htmlFor="power">Power</Form.Label>
             <Form.Control asChild>
-              <TextField.Root type="number" name="power" required onChange={handleChange} />
+              <TextField.Root
+                type="number"
+                name="power"
+                required
+                defaultValue={card.power || ""}
+                onChange={handleChange}
+              />
             </Form.Control>
           </Form.Field>
           <Form.Field name="toughness">
             <Form.Label htmlFor="toughness">Toughness</Form.Label>
             <Form.Control asChild>
-              <TextField.Root type="number" name="toughness" required onChange={handleChange} />
+              <TextField.Root
+                type="number"
+                name="toughness"
+                required
+                defaultValue={card.toughness || ""}
+                onChange={handleChange}
+              />
             </Form.Control>
           </Form.Field>
         </Flex>

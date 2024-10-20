@@ -2,6 +2,7 @@ import { DisplayableMtgCard } from "@/mtg-cards";
 import { MtgCard } from "@prisma/client";
 import type { ReactNode } from "react";
 import { CardTypeDisplay, CardTypeOrder } from "./constants";
+import { FormState } from "@/app/actions";
 
 export function CostSymbol({ cost }: { cost: string }) {
   return <i className={`ms ms-cost ms-${cost.replace(/[{}]/g, "").toLowerCase()}`} />;
@@ -79,7 +80,7 @@ export function getTailwindColorClass(card: DisplayableMtgCard): string {
   }
 }
 
-export function createDisplayCard(card: MtgCard): DisplayableMtgCard {
+export function createDisplayCard(card: MtgCard | FormState): DisplayableMtgCard {
   return {
     ...card,
     type: CardTypeOrder.filter((x) => card.type.includes(x))

@@ -1,9 +1,11 @@
 import MtgCardPreview from "@/components/MtgCardPreview";
 import prisma from "@/lib/dbConnect";
 import { createDisplayCard } from "@/lib/utils";
-import { Container } from "@radix-ui/themes";
+import { Button, Container, Flex, Strong, Text } from "@radix-ui/themes";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 type Props = { params: { card_id: string } };
 
@@ -15,7 +17,24 @@ const CardPage = async ({ params }: Props) => {
 
   return (
     <Container>
-      <MtgCardPreview card={createDisplayCard(card)} />
+      <Flex gap="6">
+        <MtgCardPreview card={createDisplayCard(card)} />
+        <Flex direction="column" gap="3">
+          <Flex gap="1">
+            <Button asChild>
+              <Link href={`/cards/${card.id}/edit`}>
+                <Pencil2Icon />
+              </Link>
+            </Button>
+            <Button color="red">
+              <TrashIcon />
+            </Button>
+          </Flex>
+          <Text>
+            Created by <Strong>{card.user}</Strong>
+          </Text>
+        </Flex>
+      </Flex>
     </Container>
   );
 };
