@@ -77,3 +77,13 @@ export async function updateCard(id: string, formState: FormState, formData: For
   redirect(`/cards/${card.id}`);
   return JSON.parse(JSON.stringify(card)) as FormState;
 }
+
+export async function deleteCard(id: string) {
+  const session = await auth();
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+
+  await prisma.mtgCard.delete({ where: { id } });
+  redirect("/cards");
+}
