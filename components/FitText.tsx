@@ -23,6 +23,7 @@ const FitText = ({ children, maxFontSize = 100, minFontSize = 8, className }: Fi
 
       let currentFontSize = maxFontSize;
       text.style.fontSize = `${currentFontSize}px`;
+      console.log(container.offsetWidth, container.offsetHeight, text.scrollWidth, text.scrollHeight);
 
       while (
         (text.scrollWidth > container.offsetWidth || text.scrollHeight > container.offsetHeight) &&
@@ -43,7 +44,7 @@ const FitText = ({ children, maxFontSize = 100, minFontSize = 8, className }: Fi
 
   return (
     <div ref={containerRef} className={className}>
-      <div ref={textRef} className="whitespace-pre-line" style={{ fontSize: `${fontSize}px` }}>
+      <div ref={textRef} className="whitespace-pre-line leading-relaxed" style={{ fontSize: `${fontSize}px` }}>
         {children}
       </div>
     </div>

@@ -17,8 +17,8 @@ const MtgCardPreview: React.FC<MtgCardProps> = ({ card }) => {
     <Card className={`${getTailwindColorClass(card)} w-[375px] h-[525px] ${hedvig.className}`}>
       <Flex gap="5" direction="column" className="h-full">
         <Flex justify="between">
-          <Heading className={hedvig.className}>{card.name}</Heading>
-          <div>{manaStringToIcons(card.manaCost)}</div>
+          <FitText className={`${hedvig.className} flex-grow max-h-[30px]`}>{card.name}</FitText>
+          <div className="flex-none">{manaStringToIcons(card.manaCost)}</div>
         </Flex>
         {card.artworkUrl ? (
           <Image
