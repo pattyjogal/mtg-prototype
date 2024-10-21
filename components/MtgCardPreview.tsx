@@ -1,9 +1,10 @@
-import { getTailwindColorClass, manaStringToIcons, renderCostSymbols } from "@/lib/utils";
+import { getTailwindColorClass, handleSyntax, manaStringToIcons, renderCostSymbols } from "@/lib/utils";
 import { Blockquote, Card, Flex, Heading, Skeleton, Text } from "@radix-ui/themes";
 import "tailwindcss/tailwind.css";
 import { DisplayableMtgCard } from "@/mtg-cards";
 import { Hedvig_Letters_Serif } from "next/font/google";
 import Image from "next/image";
+import FitText from "./FitText";
 
 const hedvig = Hedvig_Letters_Serif({ subsets: ["latin"] });
 
@@ -37,7 +38,11 @@ const MtgCardPreview: React.FC<MtgCardProps> = ({ card }) => {
             </Heading>
             <img src={card.setSymbolUrl || "/placeholder.jpg"} alt="S" className="object-cover" />
           </Flex>
-          {card.text && <Text>{renderCostSymbols(card.text)}</Text>}
+          {card.text && (
+            <FitText maxFontSize={18} minFontSize={10} className="max-h-[167px]">
+              {renderCostSymbols(handleSyntax(card.text, card))}
+            </FitText>
+          )}
           <div className="wrapper mt-auto">
             {card.flavor && <Blockquote className="italic">{card.flavor}</Blockquote>}
             {card.type.toLowerCase().includes("creature") && (

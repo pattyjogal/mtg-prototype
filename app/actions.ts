@@ -23,7 +23,12 @@ const createCardSchema = zfd.formData({
   subtype: zfd.text(z.string().optional()),
   rarity: zfd.text(),
   text: zfd.text(),
-  flavor: zfd.text(z.string().optional()),
+  flavor: zfd.text(
+    z
+      .string()
+      .optional()
+      .transform((v) => v || null)
+  ),
   power: zfd.text(z.string().optional()),
   toughness: zfd.text(z.string().optional()),
 });
@@ -60,6 +65,8 @@ export async function updateCard(id: string, formState: FormState, formData: For
   }
 
   const { artwork, ...parsed } = createCardSchema.parse(formData);
+
+  console.log(parsed);
 
   let data: Prisma.MtgCardUpdateInput = { ...parsed, user: session.user.name || "unknown" };
   if (artwork) {
