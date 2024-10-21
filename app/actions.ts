@@ -66,8 +66,6 @@ export async function updateCard(id: string, formState: FormState, formData: For
 
   const { artwork, ...parsed } = createCardSchema.parse(formData);
 
-  console.log(parsed);
-
   let data: Prisma.MtgCardUpdateInput = { ...parsed, user: session.user.name || "unknown" };
   if (artwork) {
     const mimeToExtension: { [key: string]: string } = {

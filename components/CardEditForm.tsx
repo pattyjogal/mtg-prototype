@@ -1,6 +1,6 @@
 import { FormState } from "@/app/actions";
 import * as Form from "@radix-ui/react-form";
-import { Flex, Select, TextArea, TextField } from "@radix-ui/themes";
+import { Flex, Select, Spinner, TextArea, TextField } from "@radix-ui/themes";
 import { debounce } from "lodash";
 import SubmitButton from "./SubmitButton";
 import CardTypeMultiselect from "./CardTypeMultiselect";
@@ -10,9 +10,10 @@ interface CardEditFormProps {
   onInputChange(name: string, value: string | string[]): void;
   card: FormState;
   action: (payload: FormData) => void;
+  submitText: string;
 }
 
-function CardEditForm({ onInputChange, card, action }: CardEditFormProps) {
+function CardEditForm({ onInputChange, card, action, submitText }: CardEditFormProps) {
   const debouncedInputChange = debounce((name: string, value: string | string[]) => {
     onInputChange(name, value);
   }, 1000);
@@ -143,7 +144,7 @@ function CardEditForm({ onInputChange, card, action }: CardEditFormProps) {
         </Flex>
       )}
       <Form.Submit asChild>
-        <SubmitButton label="Create Card" loading="Creating Card..." />
+        <SubmitButton label={submitText} loading={<Spinner />} />
       </Form.Submit>
     </Form.Root>
   );

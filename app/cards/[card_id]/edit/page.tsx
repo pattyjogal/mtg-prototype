@@ -23,7 +23,7 @@ export default async function CardEditPage({ params }: Props) {
   return (
     <Container>
       <Heading mb="8">Edit {card.name}</Heading>
-      <SideFormCardView onSubmit={updateCardWithId} initCard={card} />
+      <SideFormCardView onSubmit={updateCardWithId} initCard={card} submitText="Save Edits" />
     </Container>
   );
 }
