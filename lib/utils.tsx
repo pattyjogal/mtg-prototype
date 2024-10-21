@@ -22,6 +22,10 @@ export function renderCostSymbols(text: string): ReactNode[] {
   });
 }
 
+export function handleSyntax(text: string, card: DisplayableMtgCard): string {
+  return text.replaceAll("~", card.name);
+}
+
 const colorSymbols: { [key: string]: string } = {
   W: "White",
   U: "Blue",

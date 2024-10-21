@@ -13,7 +13,7 @@ export default async function CardEditPage() {
   return (
     <Container>
       <Heading mb="8">Create a Card</Heading>
-      <SideFormCardView onSubmit={createCard} />
+      <SideFormCardView onSubmit={createCard} submitText="Create Card" />
     </Container>
   );
 }

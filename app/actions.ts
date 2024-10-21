@@ -23,7 +23,12 @@ const createCardSchema = zfd.formData({
   subtype: zfd.text(z.string().optional()),
   rarity: zfd.text(),
   text: zfd.text(),
-  flavor: zfd.text(z.string().optional()),
+  flavor: zfd.text(
+    z
+      .string()
+      .optional()
+      .transform((v) => v || null)
+  ),
   power: zfd.text(z.string().optional()),
   toughness: zfd.text(z.string().optional()),
 });

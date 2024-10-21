@@ -63,6 +63,27 @@ body {
   box-shadow: 0 0 0 2px black;
 }
 
+.footer {
+  background-color: var(--background);
+  color: var(--foreground);
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid var(--gray-3);
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer a {
+  color: var(--foreground);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

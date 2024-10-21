@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { Theme } from "@radix-ui/themes";
+import { Dialog, Link, Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 
 const geistSans = localFont({
@@ -29,20 +29,27 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link href="//cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" /> 
+        <link href="//cdn.jsdelivr.net/npm/mana-font@latest/css/mana.css" rel="stylesheet" type="text/css" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Theme
-          accentColor="purple"
-          grayColor="auto"
-          panelBackground="solid"
-          scaling="100%"
-          appearance="dark"
-        >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Theme accentColor="purple" grayColor="auto" panelBackground="solid" scaling="100%" appearance="dark">
           <Navbar />
           <div className="">{children}</div>
+          <footer className="footer">
+            <div className="footer-content">
+              <p>&copy; {new Date().getFullYear()} pattyjogal. All rights reserved.</p>
+              <Dialog.Root>
+                <Dialog.Trigger>
+                  <Link className="footer-button">Credits</Link>
+                </Dialog.Trigger>
+                <Dialog.Content>
+                  <a href="https://www.flaticon.com/free-icons/trading-card" title="trading card icons">
+                    Trading card icons created by Freepik - Flaticon
+                  </a>
+                </Dialog.Content>
+              </Dialog.Root>
+            </div>
+          </footer>
         </Theme>
       </body>
     </html>

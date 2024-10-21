@@ -11,9 +11,10 @@ import { useFormState } from "react-dom";
 interface SideFormCardViewProps {
   onSubmit(state: FormState, data: FormData): Promise<FormState>;
   initCard?: FormState;
+  submitText: string;
 }
 
-export default function SideFormCardView({ onSubmit, initCard }: SideFormCardViewProps) {
+export default function SideFormCardView({ onSubmit, initCard, submitText }: SideFormCardViewProps) {
   const [card, setCard] = useState<FormState>(
     initCard || {
       name: "",
@@ -38,7 +39,7 @@ export default function SideFormCardView({ onSubmit, initCard }: SideFormCardVie
 
   return (
     <Flex justify="between">
-      <CardEditForm onInputChange={handleCardChange} card={card} action={action} />
+      <CardEditForm onInputChange={handleCardChange} card={card} action={action} submitText={submitText} />
       <MtgCardPreview card={createDisplayCard(card)} />
     </Flex>
   );
