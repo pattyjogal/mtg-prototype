@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 
 const PATHS = [
   { name: "Dashboard", href: "/" },
-  { name: "Precons", href: "#" },
+  { name: "Precons", href: "#", disabled: true },
   { name: "Cards", href: "/cards" },
-  { name: "Sets", href: "#" },
+  { name: "Sets", href: "#", disabled: true },
 ];
 
 export default function NavigationTabs() {
@@ -16,9 +16,11 @@ export default function NavigationTabs() {
 
   return (
     <TabNav.Root>
-      {PATHS.map(({ name, href }) => (
+      {PATHS.map(({ name, href, disabled }) => (
         <TabNav.Link key={name} asChild active={href === pathname}>
-          <Link href={href}>{name}</Link>
+          <Link href={href} className={disabled ? "cursor-not-allowed" : ""}>
+            {name}
+          </Link>
         </TabNav.Link>
       ))}
     </TabNav.Root>
